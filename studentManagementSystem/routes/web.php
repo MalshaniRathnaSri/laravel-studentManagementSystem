@@ -19,3 +19,4 @@ Route::get('/', function () {
 });
 
 Route::get('/registration',[Registration::class,'index'])->name('registration');
+Route::get('/registration/store',[Registration::class,'store'])->name('registration.store');
