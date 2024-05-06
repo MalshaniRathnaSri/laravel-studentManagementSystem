@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\RegistrationModel;
+use Illuminate\Support\Facades\Auth;
 
 class Registration extends Controller
 {
@@ -23,5 +24,24 @@ class Registration extends Controller
     
         return redirect()->route('registration')->with('success', 'Registration successful');
     }
+
+    public function loginShow(){
+        return view('pages.login');
+    }
+
+    public function login(Request $request)
+{
+    $credentials = $request->only('email', 'password');
+
+    $user = DB::table('registrations')->where('email', $credentials['email'])->first();
+
+    if ($user && Hash::check($credentials['password'], $user->password)) {
+        // Authentication successful
+        return redirect()->intended('/dashboard');
+    } else {
+        // Authentication failed
+        return redirect()->back()->withErrors(['email' => 'Invalid email or password']);
+    }
+}
     
 }
