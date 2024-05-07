@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Registration;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,9 +19,14 @@ Route::get('/', function () {
     return view('layout');
 });
 
+/* Admin Routes Here */
 Route::get('/admin',function(){
     return view('_admin/admindashboard');
 });
+
+/* Authentication Routes */
+Route::get('/admin/login',[AuthController::class,'show'])->name('admin.login');
+Route::post('/auth/login', [AuthController::class,'AuthLogin'])->name('auth.login');
 
 Route::get('/registration',[Registration::class,'index'])->name('registration');
 Route::get('/registration/store',[Registration::class,'store'])->name('registration.store');
